@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="aschaeffer.sonatarepublicandatefield.admin.extension.republicandatefield.class">Aschaeffer\SonataRepublicandateFieldBundle\Admin\Extension\RepublicanFieldAdminExtension</parameter>
+    </parameters>
+    <services>
+        <service id="aschaeffer.sonatarepublicandatefield.service.date_service" class="Aschaeffer\SonataRepublicandateFieldBundle\Service\DateService" public="true">
+        </service>
+        <service id="aschaeffer.sonatarepublicandatefield.admin.extension.republicandatefield" class="%aschaeffer.sonatarepublicandatefield.admin.extension.republicandatefield.class%">
+            <tag name="sonata.admin.extension"/>
+            <argument type="service" id="annotations.reader"/>
+            <argument type="service" id="aschaeffer.sonatarepublicandatefield.service.date_service"/>
+        </service>
+    </services>
+</container>

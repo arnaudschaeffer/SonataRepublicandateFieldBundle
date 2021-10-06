@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="">
+        <body>
+            <trans-unit id="republicandate_type_help">
+                <source>republicandate_type_help</source>
+                <target>Pour saisir une date au format républicain : il faut impérativement ne pas saisir une date au format grégorien (en gardant le champs vide). Veillez également à respecter le format suivant : `Mois Jour Annéee`. Ex: Frimaire 20 III.</target>
+            </trans-unit>
+       </body>
+    </file>
+</xliff>
