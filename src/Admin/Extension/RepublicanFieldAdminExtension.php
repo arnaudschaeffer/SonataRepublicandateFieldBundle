@@ -18,15 +18,8 @@ use Sonata\Form\Validator\ErrorElement;
 
 class RepublicanFieldAdminExtension extends AbstractAdminExtension
 {
-    /**
-     * @var AnnotationReader
-     */
-    protected $annotationReader;
-
-    /**
-     * @var DateService
-     */
-    protected $dateService;
+    protected AnnotationReader $annotationReader;
+    protected DateService $dateService;
 
     public function __construct(AnnotationReader $annotationReader, DateService $dateService)
     {

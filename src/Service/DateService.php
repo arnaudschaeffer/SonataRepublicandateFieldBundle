@@ -8,7 +8,7 @@ namespace Aschaeffer\SonataRepublicandateFieldBundle\Service;
  */
 class DateService
 {
-    protected static $frenchMonths = [
+    protected static array $frenchMonths = [
         "Vendémiaire",
         "Brumaire",
         "Frimaire",
@@ -24,7 +24,7 @@ class DateService
         "Sansculottide"
     ];
 
-    protected static $roman = [
+    protected static array $roman = [
         1 => "I",
         4 => "IV",
         5 => "V",
@@ -41,15 +41,17 @@ class DateService
         1000 => "M",
     ];
 
-    protected function frenchToNumber($name)
+    protected function frenchToNumber(string $name): string
     {
         return array_search($name, self::$frenchMonths) + 1;
     }
-    protected function frenchMonthNames($mo)
+    protected function frenchMonthNames($mo): ?string
     {
         if ($mo < count(self::$frenchMonths) + 1) {
             return self::$frenchMonths[$mo - 1];
         }
+
+        return null;
     }
 
     protected function romdec($rom)
@@ -88,7 +90,7 @@ class DateService
      * @return bool|\DateTime
      * @throws \Exception
      */
-    public function republicatinTodateTime($str)
+    public function republicatinTodateTime($str): \DateTime
     {
         list ($monthName, $day, $strYear) = explode(' ', preg_replace('/\s+/', ' ', $str));
         $month = $this->frenchToNumber($monthName);
@@ -107,7 +109,7 @@ class DateService
         return \DateTime::createFromFormat('m/d/Y', $gregorianDate);
     }
 
-    public function dateTimeToRepublicain(\DateTime $dt)
+    public function dateTimeToRepublicain(\DateTime $dt): ?string
     {
         list ($y, $m, $d) = explode('-', $dt->format('Y-m-d'));
 

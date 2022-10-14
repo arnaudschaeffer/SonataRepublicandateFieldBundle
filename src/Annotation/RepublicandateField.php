@@ -16,12 +16,12 @@ class RepublicandateField
      *
      * @var string
      */
-    public $gregorianField;
+    public string $gregorianField;
 
     /**
      * @return string
      */
-    public function getGregorianField()
+    public function getGregorianField(): string
     {
         return $this->gregorianField;
     }
