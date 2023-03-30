@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Aschaeffer\SonataRepublicandateFieldBundle\Admin\Extension;
 
-use App\Entity\Recette;
-use App\Entity\SonataMediaGallery;
 use Aschaeffer\SonataRepublicandateFieldBundle\Annotation\RepublicandateField;
 use Aschaeffer\SonataRepublicandateFieldBundle\Service\DateService;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Gedmo\Translatable\TranslatableListener;
 use Sonata\AdminBundle\Admin\AbstractAdminExtension;
 use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
-use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Validator\ErrorElement;
 
 class RepublicanFieldAdminExtension extends AbstractAdminExtension
@@ -25,6 +20,20 @@ class RepublicanFieldAdminExtension extends AbstractAdminExtension
     {
         $this->annotationReader = $annotationReader;
         $this->dateService = $dateService;
+    }
+
+    public function alterObject(AdminInterface $admin, object $object): void
+    {
+        $modelClassReflection = new \ReflectionClass(get_class($object));
+        foreach ($modelClassReflection->getProperties() as $reflectionProperty) {
+            $republicanField = $this->annotationReader->getPropertyAnnotation($reflectionProperty, RepublicandateField::ANNOTATION_NAME);
+
+            if ($republicanField) {
+                $getterGregorianProperty = 'get' . ucfirst($republicanField->getGregorianField());
+                $setterRepublicanProperty = 'set' . ucfirst($reflectionProperty->getName());
+                $object->$setterRepublicanProperty($this->dateService->dateTimeToRepublicain($object->$getterGregorianProperty()));
+            }
+        }
     }
 
     public function validate(AdminInterface $admin, ErrorElement $errorElement, $object)
@@ -51,7 +60,7 @@ class RepublicanFieldAdminExtension extends AbstractAdminExtension
                 $dt = $this->dateService->republicatinTodateTime($object->$getterRepublicanProperty());
                 $object->$setterGregorianProperty($dt);
             }  catch (\Exception $e) {
-                $this->getRequest()->getSession()->getFlashBag()->add('sonata_flash_error', "La date n'a pas pu être calculée : " . $e->getMessage());
+                //$this->getRequest()->getSession()->getFlashBag()->add('sonata_flash_error', "La date n'a pas pu être calculée : " . $e->getMessage());
             }
         } else {
             $setterRepublicanProperty = 'set' . ucfirst($republicanPropertyName);

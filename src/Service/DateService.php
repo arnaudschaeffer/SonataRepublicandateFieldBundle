@@ -109,8 +109,12 @@ class DateService
         return \DateTime::createFromFormat('m/d/Y', $gregorianDate);
     }
 
-    public function dateTimeToRepublicain(\DateTime $dt): ?string
+    public function dateTimeToRepublicain(?\DateTime $dt): ?string
     {
+        if (! $dt) {
+            return null;
+        }
+
         list ($y, $m, $d) = explode('-', $dt->format('Y-m-d'));
 
         $julian_date = \gregoriantojd($m, $d, $y);
