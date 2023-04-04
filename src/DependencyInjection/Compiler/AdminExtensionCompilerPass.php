@@ -24,6 +24,9 @@ class AdminExtensionCompilerPass implements CompilerPassInterface
             }
 
             $modelClass = $container->getParameterBag()->resolveValue($arguments[1]);
+            if (is_array($modelClass)) {
+                continue;
+            }
             $modelClassReflection = new \ReflectionClass($modelClass);
 
             foreach ($modelClassReflection->getProperties() as $reflectionProperty) {
